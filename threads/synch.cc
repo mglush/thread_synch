@@ -141,7 +141,7 @@ void Lock::Release() {
 }
 
 bool Lock::isHeldByCurrentThread() {
-
+    return (owner == currentThread) ? true : false;
 }
 
 // Your solution for Task 3

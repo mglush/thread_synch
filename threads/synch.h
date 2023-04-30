@@ -83,7 +83,6 @@ public:
 
 private:
     char* name;				// for debugging
-    // plus some other stuff you'll need to define
     int value;         // mutex value, should always be 0/1 or some other binary value
     List *queue;       // threads waiting on this lock
     Thread *owner;     // thread that currently holds the lock
@@ -130,17 +129,16 @@ public:
         return (name);
     }
 
-    void Wait(Lock *conditionLock); 	// these are the 3 operations on
-    // condition variables; releasing the
-    // lock and going to sleep are
-    // *atomic* in Wait()
-    void Signal(Lock *conditionLock);   // conditionLock must be held by
-    void Broadcast(Lock *conditionLock);// the currentThread for all of
-    // these operations
+    void Wait(Lock *conditionLock); 	    // these are the 3 operations on
+                                            // condition variables; releasing the
+                                            // lock and going to sleep are
+                                            // *atomic* in Wait()
+    void Signal(Lock *conditionLock);       // conditionLock must be held by
+    void Broadcast(Lock *conditionLock);    // the currentThread for all of
+                                            // these operations
 
 private:
     char* name;
-    // plus some other stuff you'll need to define
     List *queue;       // threads waiting for on this condition var
 };
 #endif // SYNCH_H

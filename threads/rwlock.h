@@ -1,21 +1,31 @@
 #ifndef __RWLOCK_H__
 #define __RWLOCK_H__
-#include<semaphore.h>
+
 #include "synch.h"
 
 class RWLock{
 private:
-      //Add  fields for  RWLock. Your solution to Task 3
-      //TODO
+    unsigned int ar; // active readers.
+    unsigned int wr; // waiting readers.
+    unsigned int aw; // active writers.
+    unsigned int ww; // waiting writers.
+
+    Lock *lock; // mutex lock.
+
+    Condition *okToRead; // condition variable.
+    Condition *okToWrite; // condition variable.
+    
 public:
-    	RWLock();
-    	~RWLock();
-    //Reader
-    	void startRead();
-    	void doneRead();
-    // Writer
-    	void startWrite();
-    	void  doneWrite();
+    RWLock();
+    ~RWLock();
+    
+    // reader.
+    void startRead();
+    void doneRead();
+    
+    // writer.
+    void startWrite();
+    void  doneWrite();
 };
 
 #endif
