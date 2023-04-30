@@ -127,7 +127,7 @@ void Lock::Acquire() {
 void Lock::Release() {
     IntStatus oldLevel = interrupt->SetLevel(IntOff); // disable interrupts
 
-    Thread *thread = (Thread *)queue->Remove() // get the next thread in the waiting queue.
+    Thread *thread = (Thread *)queue->Remove(); // get the next thread in the waiting queue.
     if (thread != NULL)	   // make sure there actually was a thread there.
         scheduler->ReadyToRun(thread); // inform scheduler this thread is now free.
     value = 1; // adjust the value saying we released da thang.
