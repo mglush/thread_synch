@@ -3,6 +3,6 @@
 
 # But not these files...
 !.gitignore
-!threads
+!threads/
 !README.md
 !P1B_report.txt
