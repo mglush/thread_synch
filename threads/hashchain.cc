@@ -14,7 +14,7 @@
 
 //NOYIELD disables the yields used to help uncover synchronization bugs
 //  - the yields are useful for uncovering bugs, but performance testing may be easier without them
-#define NOYIELD 1
+//#define NOYIELD 1
 
 #ifndef NOYIELD
 #ifdef NACHOS
@@ -42,19 +42,16 @@
 #define END_READ() sem[hash]->V()
 #define START_WRITE() sem[hash]->P()
 #define END_WRITE() sem[hash]->V()
-#define SYNC_DESTROY delete[] sem;
 #elif defined P1_LOCK //using our implemented nachos lock. Your solution for Task 2
 #define START_READ() lck[hash]->Acquire()
 #define END_READ() lck[hash]->Release()
 #define START_WRITE() lck[hash]->Acquire()
 #define END_WRITE() lck[hash]->Release()
-#define SYNC_DESTROY delete[] lck;
 #elif defined P1_RWLOCK //using our rwlock. Your solution for Task 3
-#define START_READ() rwlck[hash]->startRead()
-#define END_READ() rwlck[hash]->doneRead()
-#define START_WRITE() rwlck[hash]->startWrite()
-#define END_WRITE() rwlck[hash]->doneWrite()
-#define SYNC_DESTROY delete[] rwlck;
+#define START_READ() do{}while(0) //TODO
+#define END_READ() do{}while(0) //TODO
+#define START_WRITE() do{}while(0) //TODO
+#define END_WRITE() do{}while(0) //TODO
 #else //else behave like NOLOCK (no option passed)
 #define START_READ() do{}while(0)
 #define END_READ() do{}while(0)
@@ -223,7 +220,6 @@ HashMap:: ~HashMap() {
     }
   }
   delete[] table;
-  SYNC_DESTROY
 }
 
 
