@@ -38,10 +38,10 @@
 #define START_WRITE() do{}while(0)
 #define END_WRITE() do{}while(0)
 #elif defined P1_SEMAPHORE //using nachos semaphore. Your solution for Task 1
-#define START_READ() do{}while(0) //TODO  
-#define END_READ() do{}while(0) //TODO
-#define START_WRITE() do{}while(0) //TODO
-#define END_WRITE() do{}while(0) //TODO
+#define START_READ() sem[hash]->P()
+#define END_READ() sem[hash]->V()
+#define START_WRITE() sem[hash]->P()
+#define END_WRITE() sem[hash]->V()
 #elif defined P1_LOCK //using our implemented nachos lock. Your solution for Task 2
 #define START_READ() do{}while(0) //TODO
 #define END_READ() do{}while(0) //TODO
@@ -97,11 +97,17 @@ HashMap::HashMap() {
   for (int i = 0; i < TABLE_SIZE; i++)
     table[i] = NULL;
 #ifdef P1_SEMAPHORE
-  //insert setup code here
+  for (int i = 0; i < TABLE_SIZE; i++)
+    sem[i] = new Semaphore(NULL, 1);
+    
 #elif defined P1_LOCK
-  //insert setup code here
+  for (int i = 0; i < TABLE_SIZE; i++)
+    lck[i] = new Lock(NULL);
+
 #elif defined P1_RWLOCK
-  //insert setup code here
+  for (int i = 0; i < TABLE_SIZE; i++)
+    rwlck[i] = new RWLock();
+
 #endif
 }
 
