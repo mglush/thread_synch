@@ -3,9 +3,9 @@
 
 # But not these files...
 !.gitignore
-!rwlock.cc
-!rwlock.h
-!synch.cc
-!hashchain.cc
+!threads/rwlock.cc
+!threads/rwlock.h
+!threads/synch.cc
+!threads/hashchain.cc
 !README.md
 !P1B_report.txt
