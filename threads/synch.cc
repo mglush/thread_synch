@@ -100,9 +100,6 @@ Semaphore::V()
 // Dummy functions -- so we can compile our later assignments
 // Note -- without a correct implementation of Condition::Wait(),
 // the test case in the network assignment won't work!
-//
-// Your solution for Task 2
-// TODO
 
 Lock::Lock(char* debugName) {
     name = debugName;
@@ -144,11 +141,49 @@ bool Lock::isHeldByCurrentThread() {
     return (owner == currentThread) ? true : false;
 }
 
-// Your solution for Task 3
-// TODO
+Condition::Condition(char* debugName) {
+    name = debugName;
+    queue = new List;
+}
 
-Condition::Condition(char* debugName) { }
-Condition::~Condition() { }
-void Condition::Wait(Lock* conditionLock) { }
-void Condition::Signal(Lock* conditionLock) { }
-void Condition::Broadcast(Lock* conditionLock) { }
+Condition::~Condition() {
+    delete queue;
+}
+
+void Condition::Wait(Lock* conditionLock) {
+    IntStatus oldLevel = interrupt->SetLevel(IntOff);
+
+    if (conditionLock->isHeldByCurrentThread()) {
+        conditionLock->Release();
+        // suspend thread from acting, add it to the queue.
+        queue->Append((void *) currentThread);
+        currentThread->Sleep();
+        // release the condition lock.
+        conditionLock->Acquire();
+    }
+    (void) interrupt->SetLevel(oldLevel);
+}
+
+void Condition::Signal(Lock* conditionLock) {
+    IntStatus oldLevel = interrupt->SetLevel(IntOff);
+
+    if (conditionLock->isHeldByCurrentThread()) {
+        Thread* thread = (Thread *)queue->Remove();
+        if (thread != NULL) {
+            scheduler->ReadyToRun(thread);
+        }
+    }
+    (void) interrupt->SetLevel(oldLevel);
+}
+
+void Condition::Broadcast(Lock* conditionLock) {
+    IntStatus oldLevel = interrupt->SetLevel(IntOff);
+
+    if (conditionLock->isHeldByCurrentThread()) {
+        Thread* thread;
+        while ( (thread = (Thread *)queue->Remove()) != NULL) {
+            scheduler->ReadyToRun(thread);
+        }
+    }
+    (void) interrupt->SetLevel(oldLevel);
+}
