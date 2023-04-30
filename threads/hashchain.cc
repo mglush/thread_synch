@@ -14,7 +14,7 @@
 
 //NOYIELD disables the yields used to help uncover synchronization bugs
 //  - the yields are useful for uncovering bugs, but performance testing may be easier without them
-//#define NOYIELD 1
+#define NOYIELD 1
 
 #ifndef NOYIELD
 #ifdef NACHOS
