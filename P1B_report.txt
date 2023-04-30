@@ -1,0 +1,19 @@
+UCSB CS170 Spring 2023 Project 1B Report
+Team Members: Michael Glushchenko (I chose to do the project by myself).
+
+Overview of the work/codeflow:
+
+Task 1: This one was very easy, I just had to implement a macro and initialize the semaphore array to get this to work. No problems here.
+Task 2: This one was slightly more work, since I had to do the same thing as in task 1, but for locks, but I ALSO had to implement the lock class.
+        Implementing the Lock class was fairly simple, I followed the semaphore class code, it was very much similar, except we also had to track the
+        Thread that owns that lock (in hindsight, it seeems we did not need the value variable... I think it is enough to check if the owner thread is null
+        to see whether the lock is available or not... I still chose to use the value, but it's just a thought). Overall, no problems with this task either,
+        the Synchronization I lecture slides were of great help in this one, especially the slides defining sempahores and locks.
+Task 3: This task involved doing what we did in task 1 in hashchain.cc, but also involved implementing the Condition class. I struggled most with how to
+        implement the Wait() function, as initially I was very confused on what it is we could possibly be waiting for. Ended up reading the textbook section
+        on concurrency primitives, and reviewing the lecture slides for Synchronization I and II again. Eventually implemented the code step by step to follow
+        the definition of the Wait() function, and it worked. This task was neat because it gave me the understanding of how condition variables actually work
+        (I understood locks and semaphores well, but needed to understand condition variables better -- I do now). Finally, it was very easy to rewrite
+        rwlock.cc and rwlock.h from Project1A I submitted, simply changing the pthread functions to the Lock and Condition functions we just implemented.
+
+The code is commented as well, I modified synch.cc, hashchain.cc, rwlock.cc, and rwlock.h.

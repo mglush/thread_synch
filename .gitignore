@@ -1,8 +1,0 @@
-# Ignore everything
-*
-
-# But not these files...
-!.gitignore
-!threads/
-!README.md
-!P1B_report.txt
